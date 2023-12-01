@@ -13,13 +13,15 @@ class MyServer(BaseHTTPRequestHandler):
     """
 
     def __get_html_content(self):
-        pass   #  вернуть содержимое index-файла
+        with open("index.html", "r", encoding='utf8') as f:
+            page_content = f.read()
+            return page_content
 
     def do_GET(self):
         """ Метод для обработки входящих GET-запросов """
-        query_components = parse_qs(urlparse(self.path).query)
-        print(query_components)
+        # query_components = parse_qs(urlparse(self.path).query)
         page_content = self.__get_html_content()
+        # print(page_content)
         self.send_response(200)  # Отправка кода ответа
         self.send_header("Content-type", "text/html")  # Отправка типа данных, который будет передаваться
         self.end_headers()  # Завершение формирования заголовков ответа
